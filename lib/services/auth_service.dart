@@ -45,7 +45,7 @@ class AuthService {
     await _auth.signOut();
   }
 
-  Future<void> createAccount(
+  Future<UserModel> createAccount(
     String email,
     String password,
     XFile profilePicture,
@@ -68,6 +68,19 @@ class AuthService {
       'displayName': displayName,
       'createdAt': DateTime.now(),
     });
+    UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: email, password: password);
+
+    UserModel user = UserModel(
+      uid: userCredential.user!.uid,
+      email: userCredential.user!.email!,
+      emailVerified: userCredential.user!.emailVerified,
+      password: '',
+      displayName: displayName,
+      photoURL: photoURL,
+    );
+    log(user.toString());
+    return user;
   }
 
   Future<void> resetPassword(String email) async {

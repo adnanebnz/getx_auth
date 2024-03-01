@@ -33,7 +33,7 @@ class AuthController extends GetxController {
   }
 
   void createAccount() async {
-    _performAuthAction(
+    _performAction(
         _authService.createAccount(email.value, password.value,
             profilePicture.value, displayName.value),
         'Account creation');

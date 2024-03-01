@@ -22,18 +22,22 @@ class _HomeScreenState extends State<HomeScreen> {
           if (authController.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
           } else {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.network(authController.user.value.photoURL),
-                  Text("Welcome! ${authController.user.value.displayName}"),
-                  FilledButton(
-                      onPressed: () {
-                        authController.signOut();
-                      },
-                      child: const Text("Logout")),
-                ],
+            return SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image.network(authController.user.value.photoURL),
+                    const SizedBox(height: 20),
+                    Text("Welcome! ${authController.user.value.displayName}"),
+                    const SizedBox(height: 20),
+                    FilledButton(
+                        onPressed: () {
+                          authController.signOut();
+                        },
+                        child: const Text("Logout")),
+                  ],
+                ),
               ),
             );
           }
