@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_app/screens/home_screen.dart';
 import 'package:flutter_firebase_app/utils/auth_check.dart';
 import 'package:flutter_firebase_app/utils/bindings.dart';
 import 'package:flutter_firebase_app/utils/routes.dart';

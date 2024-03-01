@@ -1,13 +1,12 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_firebase_app/models/UserModel.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:developer' show log;
-
-import '../models/UserModel.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -21,17 +20,25 @@ class AuthService {
     UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email, password: password);
 
-    //get user data from firestore
+    //get data from firestore
     DocumentSnapshot<Map<String, dynamic>> userDoc = await _firestore
         .collection('users')
         .doc(userCredential.user!.uid)
         .get();
+    Map<String, dynamic> userData = userDoc.data()!;
 
-    // Convert the DocumentSnapshot to a UserModel
-    UserModel userModel = UserModel.fromDocumentSnapshot(userDoc);
-    log(userModel.toString());
+    //set user data to user model
+    UserModel user = UserModel(
+      uid: userCredential.user!.uid,
+      email: userData['email'],
+      emailVerified: userCredential.user!.emailVerified,
+      password: '',
+      displayName: userData['displayName'],
+      photoURL: userData['photoURL'],
+    );
+    log(user.toString());
 
-    return userModel;
+    return user;
   }
 
   Future<void> signOut() async {
@@ -79,7 +86,7 @@ class AuthService {
     await _auth.currentUser!.delete();
   }
 
-  Future signInWithGoogle() async {
+  Future<UserModel> signInWithGoogle() async {
     GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
     AuthCredential credential = GoogleAuthProvider.credential(
@@ -95,7 +102,16 @@ class AuthService {
         'displayName': userCredentials.user!.displayName,
         'createdAt': DateTime.now(),
       });
-      return userCredentials.user;
     }
+    UserModel user = UserModel(
+      uid: userCredentials.user!.uid,
+      email: userCredentials.user!.email!,
+      emailVerified: userCredentials.user!.emailVerified,
+      password: '',
+      displayName: userCredentials.user!.displayName!,
+      photoURL: userCredentials.user!.photoURL!,
+    );
+    log(user.toString());
+    return user;
   }
 }

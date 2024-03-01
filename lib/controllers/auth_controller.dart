@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_app/models/UserModel.dart';
 import 'package:flutter_firebase_app/services/auth_service.dart';
 import 'package:get/get.dart';
-import 'package:flutter_firebase_app/models/UserModel.dart';
-import 'dart:developer' show log;
-
 import 'package:image_picker/image_picker.dart';
 
 class AuthController extends GetxController {
@@ -60,7 +58,7 @@ class AuthController extends GetxController {
   }
 
   void signInWithGoogle() async {
-    _performAuthAction(_authService.signInWithGoogle(), 'Sign in with Google');
+    _performAction(_authService.signInWithGoogle(), 'Sign in with Google');
   }
 
   void _performAction(Future<UserModel> action, String name) async {
@@ -95,16 +93,7 @@ class AuthController extends GetxController {
     try {
       isLoading.value = true;
       await action;
-      User? firebaseUser = FirebaseAuth.instance.currentUser;
-      if (firebaseUser != null) {
-        user.update((val) {
-          val?.uid = firebaseUser.uid;
-          val?.email = firebaseUser.email!;
-          val?.emailVerified = firebaseUser.emailVerified;
-          val?.displayName = firebaseUser.displayName!;
-          val?.photoURL = firebaseUser.photoURL!;
-        });
-      }
+
       //display success message
       Get.snackbar(
         'Success',

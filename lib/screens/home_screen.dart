@@ -26,9 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Image.network(authController.user.value.photoURL ??
-                      ""
-                          "https://via.placeholder.com/150"),
+                  Image.network(authController.user.value.photoURL),
                   Text("Welcome! ${authController.user.value.displayName}"),
                   FilledButton(
                       onPressed: () {
