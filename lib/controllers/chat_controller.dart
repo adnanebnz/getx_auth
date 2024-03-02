@@ -10,10 +10,7 @@ import 'package:get/get.dart';
 class ChatController extends GetxController {
   RxBool isLoading = false.obs;
   RxList<UserModel> members = <UserModel>[].obs;
-  RxList<MessageModel> messages = <MessageModel>[].obs;
   RxString message = ''.obs;
-  RxString roomName = ''.obs;
-  RxString roomId = ''.obs;
   Rx<RoomModel> room = RoomModel(
     uid: '',
     name: '',
@@ -27,39 +24,42 @@ class ChatController extends GetxController {
   final ChatService _chatService = ChatService();
 
   void createOrFindRoom(String memberId) async {
-    _performRoomAction(_chatService.createOrFindRoom(roomName.value, memberId));
+    _performRoomAction(
+        _chatService.createOrFindRoom(room.value.name, memberId));
   }
 
   void deleteRoom() async {
-    _performChatAction(_chatService.deleteRoom(roomId.value), 'Room deletion');
+    _performChatAction(
+        _chatService.deleteRoom(room.value.uid), 'Room deletion');
   }
 
   void addPersonToRoom(String personId) async {
     _performChatAction(
-        _chatService.addMemberToRoom(roomId.value, personId), 'Add person');
+        _chatService.addMemberToRoom(room.value.uid, personId), 'Add person');
   }
 
   void removePersonToRoom(String personId) async {
-    _performChatAction(
-        _chatService.addMemberToRoom(roomId.value, personId), 'Remove person');
+    _performChatAction(_chatService.addMemberToRoom(room.value.uid, personId),
+        'Remove person');
   }
 
   //sendMessage
   void sendMessage(String authorId) async {
     _performChatAction(
-        _chatService.sendMessage(roomId.value, message.value, authorId),
+        _chatService.sendMessage(room.value.uid, message.value, authorId),
         'Send message');
   }
 
   // Retrieve messages
-  Stream<List<MessageModel>> getMessages(String roomId) {
+  Stream<List<MessageModel>> getMessages(String room) {
     return _firestore
         .collection('rooms')
-        .doc(roomId)
+        .doc(room)
         .collection('messages')
         .orderBy('createdAt', descending: false)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) {
+              // log("DOC author uid : ${doc.data()['uid']}");
               return MessageModel(
                 uid: doc['uid'],
                 message: doc['message'],
@@ -72,13 +72,14 @@ class ChatController extends GetxController {
 
   //mark message as seen
   void markMessageAsSeen(String messageId) async {
-    _performChatAction(_chatService.markMessageAsSeen(roomId.value, messageId),
+    _performChatAction(
+        _chatService.markMessageAsSeen(room.value.uid, messageId),
         'Mark as seen');
   }
 
   //get room members
   void getRoomMembers() async {
-    _performUserAction(_chatService.getRoomMembers(roomId.value));
+    _performUserAction(_chatService.getRoomMembers(room.value.uid));
   }
 
   // ! HELPER FUNCS
@@ -101,8 +102,9 @@ class ChatController extends GetxController {
     try {
       isLoading.value = true;
       RoomModel roomModel = await action;
-      roomId.value = roomModel.uid;
+      room.value.uid = roomModel.uid;
       room.value = roomModel;
+      Get.toNamed("/chat");
     } catch (e) {
       print(e);
     } finally {

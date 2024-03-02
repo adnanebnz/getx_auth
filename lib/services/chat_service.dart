@@ -1,11 +1,9 @@
 // ignore_for_file: avoid_print
 
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_firebase_app/models/message_model.dart';
 import 'package:flutter_firebase_app/models/room_model.dart';
 import 'package:flutter_firebase_app/models/user_model.dart';
 
@@ -17,10 +15,11 @@ class ChatService {
 
   Future<RoomModel> createOrFindRoom(String? name, String memberId) async {
     try {
+      String currentUserId = _auth.currentUser!.uid;
+      List<String> members = [currentUserId, memberId];
       final rooms = await _firestore
           .collection('rooms')
-          .where('name', isEqualTo: name)
-          .where('members', arrayContains: memberId)
+          .where('members', arrayContainsAny: members)
           .get();
 
       if (rooms.docs.isNotEmpty) {

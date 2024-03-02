@@ -30,6 +30,15 @@ class AuthController extends GetxController {
 
   void signOut() async {
     _performAuthAction(_authService.signOut(), 'Sign out');
+    //set empty
+    final userModel = UserModel(
+        uid: "",
+        displayName: "",
+        emailVerified: false,
+        photoURL: "",
+        email: "");
+    user.value = userModel;
+    user.refresh();
   }
 
   void createAccount() async {
@@ -67,6 +76,7 @@ class AuthController extends GetxController {
       UserModel userModel = await action;
 
       user.value = userModel;
+
       user.refresh();
 
       //display success message
@@ -93,6 +103,7 @@ class AuthController extends GetxController {
     try {
       isLoading.value = true;
       await action;
+      user.refresh();
 
       //display success message
       Get.snackbar(

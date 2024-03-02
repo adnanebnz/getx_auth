@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -36,7 +35,6 @@ class AuthService {
       displayName: userData['displayName'],
       photoURL: userData['photoURL'],
     );
-    log(user.toString());
 
     return user;
   }
@@ -63,6 +61,7 @@ class AuthService {
     await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
     await _firestore.collection('users').doc(_auth.currentUser!.uid).set({
+      'uid': _auth.currentUser!.uid,
       'email': email,
       'photoURL': photoURL,
       'displayName': displayName,
@@ -97,6 +96,7 @@ class AuthService {
 
     if (userCredentials.additionalUserInfo!.isNewUser) {
       _firestore.collection('users').doc(userCredentials.user!.uid).set({
+        'uid': userCredentials.user!.uid,
         'email': userCredentials.user!.email,
         'photoURL': userCredentials.user!.photoURL,
         'displayName': userCredentials.user!.displayName,
@@ -111,7 +111,6 @@ class AuthService {
       displayName: userCredentials.user!.displayName!,
       photoURL: userCredentials.user!.photoURL!,
     );
-    log(user.toString());
     return user;
   }
 }
