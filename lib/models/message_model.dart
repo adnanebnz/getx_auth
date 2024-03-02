@@ -1,11 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_firebase_app/models/user_model.dart';
 
 class MessageModel {
-  String uid;
-  String message;
-  UserModel author;
-  DateTime createdAt;
-  bool isSeen;
+  final String uid;
+  final String message;
+  final UserModel author; // Change this to UserModel
+  final DateTime createdAt;
+  final bool isSeen;
 
   MessageModel({
     required this.uid,
@@ -20,7 +21,7 @@ class MessageModel {
       uid: json['uid'],
       message: json['message'],
       author: UserModel.fromJson(json['author']),
-      createdAt: json['createdAt'].toDate(),
+      createdAt: (json['createdAt'] as Timestamp).toDate(),
       isSeen: json['isSeen'],
     );
   }

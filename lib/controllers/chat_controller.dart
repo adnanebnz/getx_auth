@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_firebase_app/models/message_model.dart';
 import 'package:flutter_firebase_app/models/room_model.dart';
 import 'package:flutter_firebase_app/models/user_model.dart';
@@ -19,10 +22,12 @@ class ChatController extends GetxController {
     messages: [],
   ).obs;
 
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   final ChatService _chatService = ChatService();
 
-  void createRoom(String memberId) async {
-    _performRoomAction(_chatService.createRoom(roomName.value, memberId));
+  void createOrFindRoom(String memberId) async {
+    _performRoomAction(_chatService.createOrFindRoom(roomName.value, memberId));
   }
 
   void deleteRoom() async {
@@ -46,15 +51,29 @@ class ChatController extends GetxController {
         'Send message');
   }
 
+  // Retrieve messages
+  Stream<List<MessageModel>> getMessages(String roomId) {
+    return _firestore
+        .collection('rooms')
+        .doc(roomId)
+        .collection('messages')
+        .orderBy('createdAt', descending: false)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((doc) {
+              return MessageModel(
+                uid: doc['uid'],
+                message: doc['message'],
+                author: UserModel.fromJson(doc['author']),
+                createdAt: doc['createdAt'].toDate(),
+                isSeen: doc['isSeen'],
+              );
+            }).toList());
+  }
+
   //mark message as seen
   void markMessageAsSeen(String messageId) async {
     _performChatAction(_chatService.markMessageAsSeen(roomId.value, messageId),
         'Mark as seen');
-  }
-
-  //get room messages
-  void getRoomMessages() async {
-    _performMessagesAction(_chatService.getRoomMessages(roomId.value));
   }
 
   //get room members
@@ -70,20 +89,6 @@ class ChatController extends GetxController {
       List<UserModel>? usersList = await action;
       if (usersList != null) {
         members.value = usersList;
-      }
-    } catch (e) {
-      print(e);
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  void _performMessagesAction(Future<List<MessageModel>?> action) async {
-    try {
-      isLoading.value = true;
-      List<MessageModel>? messagesList = await action;
-      if (messagesList != null) {
-        messages.value = messagesList;
       }
     } catch (e) {
       print(e);

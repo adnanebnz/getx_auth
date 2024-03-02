@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -31,17 +32,23 @@ class _HomeScreenState extends State<HomeScreen> {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else {
               final users = snapshot.data?.docs;
+              users?.removeWhere(
+                  (user) => user.id == authController.user.value.uid);
               return ListView.builder(
                 itemCount: users?.length,
                 itemBuilder: (context, index) {
                   final user = users?[index];
                   return ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(user?['photoURL'] ?? ''),
+                    ),
                     title: Text(user?['displayName']),
-                    onTap: () async {
+                    onTap: () {
                       chatController.roomName.value =
                           'Chat with ${user?['displayName']}';
-                      chatController.createRoom(user?['uid']);
-                      Get.to(() => ChatScreen());
+                      chatController
+                          .createOrFindRoom(snapshot.data!.docs[index].id);
+                      Get.to(() => const ChatScreen());
                     },
                   );
                 },

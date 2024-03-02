@@ -1,14 +1,11 @@
-import 'package:flutter_firebase_app/models/user_model.dart';
-
-import 'message_model.dart';
-
 class RoomModel {
   String uid;
   String? name;
-  List<UserModel> members = [];
-  List<MessageModel> messages = [];
+  List<dynamic> members = [];
+  List<dynamic> messages = [];
 
   DateTime createdAt;
+
   RoomModel({
     required this.uid,
     this.name,
@@ -22,12 +19,9 @@ class RoomModel {
       uid: json['uid'],
       name: json['name'],
       createdAt: json['createdAt'].toDate(),
-      members: json['members']
-          .map<UserModel>((member) => UserModel.fromJson(member))
-          .toList(),
-      messages: json['messages']
-          .map<MessageModel>((message) => MessageModel.fromJson(message))
-          .toList(),
+      members: List<String>.from(json['members']),
+      // Change here
+      messages: List<String>.from(json['messages']), // Change here
     );
   }
 
@@ -36,8 +30,13 @@ class RoomModel {
       'uid': uid,
       'name': name,
       'createdAt': createdAt,
-      'members': members.map((member) => member.toJson()).toList(),
-      'messages': messages.map((message) => message.toJson()).toList(),
+      'members': members, // Change here
+      'messages': messages, // Change here
     };
+  }
+
+  @override
+  String toString() {
+    return 'RoomModel{uid: $uid, name: $name, members: $members, messages: $messages, createdAt: $createdAt}';
   }
 }
