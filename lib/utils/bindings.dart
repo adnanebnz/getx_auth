@@ -1,4 +1,5 @@
 import 'package:flutter_firebase_app/controllers/auth_controller.dart';
+import 'package:flutter_firebase_app/controllers/chat_controller.dart';
 import 'package:get/get.dart';
 
 class AuthBindings extends Bindings {
@@ -10,7 +11,9 @@ class AuthBindings extends Bindings {
 
 class HomeBindings extends Bindings {
   @override
-  void dependencies() {}
+  void dependencies() {
+    Get.put<ChatController>(ChatController());
+  }
 }
 
 class AppBindings extends Bindings {

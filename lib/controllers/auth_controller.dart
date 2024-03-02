@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_app/models/UserModel.dart';
+import 'package:flutter_firebase_app/models/user_model.dart';
 import 'package:flutter_firebase_app/services/auth_service.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -67,7 +67,7 @@ class AuthController extends GetxController {
       UserModel userModel = await action;
 
       user.value = userModel;
-      user.refresh(); // Notify the listeners about the change
+      user.refresh();
 
       //display success message
       Get.snackbar(
