@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCjvmJB_4CAipMU4ywMNlC1VH8WMZIHwTQ',
-    appId: '1:657051586188:android:47440183a03037afc0b5a9',
+    appId: '1:657051586188:android:17398e517c55d408c0b5a9',
     messagingSenderId: '657051586188',
     projectId: 'fluttertodo-8aa29',
     storageBucket: 'fluttertodo-8aa29.appspot.com',
@@ -62,19 +62,23 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDe7kfUKCxLcUZQx9eSN4nnK2iJS9SR8UQ',
-    appId: '1:657051586188:ios:e695a004660d0d74c0b5a9',
+    appId: '1:657051586188:ios:4b95975d5ffd8647c0b5a9',
     messagingSenderId: '657051586188',
     projectId: 'fluttertodo-8aa29',
     storageBucket: 'fluttertodo-8aa29.appspot.com',
-    iosBundleId: 'com.example.flutterFirebaseApp',
+    androidClientId: '657051586188-sfb4ou4rk6o4tr47h9dhb9anjcrg0qtk.apps.googleusercontent.com',
+    iosClientId: '657051586188-u6rt23iqfsahg05eq67407gcgofaiirc.apps.googleusercontent.com',
+    iosBundleId: 'com.example.chatApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyDe7kfUKCxLcUZQx9eSN4nnK2iJS9SR8UQ',
-    appId: '1:657051586188:ios:ca8b323b9286e276c0b5a9',
+    appId: '1:657051586188:ios:5fdb2d356262c85fc0b5a9',
     messagingSenderId: '657051586188',
     projectId: 'fluttertodo-8aa29',
     storageBucket: 'fluttertodo-8aa29.appspot.com',
-    iosBundleId: 'com.example.flutterFirebaseApp.RunnerTests',
+    androidClientId: '657051586188-sfb4ou4rk6o4tr47h9dhb9anjcrg0qtk.apps.googleusercontent.com',
+    iosClientId: '657051586188-umv8tc12q9pmflc9m9hhssa2ff3nsqop.apps.googleusercontent.com',
+    iosBundleId: 'com.example.chatApp.RunnerTests',
   );
 }

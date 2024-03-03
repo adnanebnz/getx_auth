@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>326992276027-ije5uri2o4lgscia210dm78hsbsvukc4.apps.googleusercontent.com</string>
+	<string>657051586188-u6rt23iqfsahg05eq67407gcgofaiirc.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.326992276027-ije5uri2o4lgscia210dm78hsbsvukc4</string>
+	<string>com.googleusercontent.apps.657051586188-u6rt23iqfsahg05eq67407gcgofaiirc</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>657051586188-sfb4ou4rk6o4tr47h9dhb9anjcrg0qtk.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDNl5PCXJyA-7JuCdF9UeDWcrpROzGl7OA</string>
+	<string>AIzaSyDe7kfUKCxLcUZQx9eSN4nnK2iJS9SR8UQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>326992276027</string>
+	<string>657051586188</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.flutterFirebaseApp</string>
+	<string>com.example.chatApp</string>
 	<key>PROJECT_ID</key>
-	<string>flutterfirebaseapp-a1f28</string>
+	<string>fluttertodo-8aa29</string>
 	<key>STORAGE_BUCKET</key>
-	<string>flutterfirebaseapp-a1f28.appspot.com</string>
+	<string>fluttertodo-8aa29.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:326992276027:ios:5b79bf2800f55aa45e4a1e</string>
+	<string>1:657051586188:ios:4b95975d5ffd8647c0b5a9</string>
 </dict>
 </plist>

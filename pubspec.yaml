@@ -1,17 +1,15 @@
 name: flutter_firebase_app
-description: A new Flutter project.
+description: "A new Flutter project."
 publish_to: "none"
 
-version: 1.0.0+1
-
 environment:
-  sdk: ">=3.0.3 <4.0.0"
+  sdk: ">=3.3.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.6
   flutter_native_splash: ^2.3.10
   firebase_core: ^2.25.5
   firebase_auth: ^4.17.6
@@ -27,13 +25,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.0
 
 flutter:
   uses-material-design: true
-
-  assets:
-    - assets/logos/
+assets:
+  - assets/logos/
 
 flutter_native_splash:
   color: "#FFFFFF"
@@ -45,7 +42,6 @@ flutter_native_splash:
   android: true
   ios: true
   web: true
-
 
   # fonts:
   #   - family: Schyler
